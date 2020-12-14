@@ -1,0 +1,5 @@
+﻿  main.cpp
+C:\Users\zarmm\source\repos\RocketLandingSolution\RocketLandingSolution\main.cpp(14,41): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\zarmm\source\repos\RocketLandingSolution\RocketLandingSolution\main.cpp(15,34): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\zarmm\source\repos\RocketLandingSolution\RocketLandingSolution\main.cpp(50,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  RocketLandingSolution.vcxproj -> C:\Users\zarmm\source\repos\RocketLandingSolution\x64\Debug\RocketLandingSolution.exe

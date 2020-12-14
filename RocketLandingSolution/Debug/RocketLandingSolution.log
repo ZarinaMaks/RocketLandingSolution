@@ -1,0 +1,5 @@
+﻿  main.cpp
+C:\Users\zarmm\source\repos\RocketLandingSolution\RocketLandingSolution\main.cpp(13,41): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\zarmm\source\repos\RocketLandingSolution\RocketLandingSolution\main.cpp(14,34): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\zarmm\source\repos\RocketLandingSolution\RocketLandingSolution\main.cpp(49,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+sfml-graphics-d.lib(sfml-graphics-d-2.dll) : fatal error LNK1112: module machine type 'x64' conflicts with target machine type 'x86'
