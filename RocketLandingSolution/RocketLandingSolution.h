@@ -5,8 +5,8 @@ using namespace std;
 //Changable parameters:
 const float FUEL = 100.0;
 const float CRUSH_SPEED = 5.0;
-const float ROCKET_INITIAL_X = 0.0;
-const float ROCKET_INITIAL_Y = 0.0;
+const float ROCKET_INITIAL_X = 200.0;
+const float ROCKET_INITIAL_Y = -500.0;
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 500;
 const int LANDING_FIELD_LENGHT = 100;
