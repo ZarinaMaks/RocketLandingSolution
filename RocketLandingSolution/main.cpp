@@ -14,9 +14,7 @@ int main()
 	random_device rd;
 	mt19937 mersenne(rd());
 	int landingFieldPosition = mersenne() % (WINDOW_WIDTH - LANDING_FIELD_LENGHT);
-
-	// Setting parameters of a Rocket and a Landing Fiend:
-	Rocket rocket(WINDOW_WIDTH / 2 - 10, 10);
+	Rocket rocket;
 
 	// Timer: 
 	srand(static_cast<unsigned>(time(0)));
