@@ -5,7 +5,7 @@ using namespace std;
 //Changable parameters:
 const float FUEL = 100.0;
 const float CRUSH_SPEED = 5.0;
-const float ROCKET_INITIAL_X = 500.0;
+const float ROCKET_INITIAL_X = 200.0;
 const float ROCKET_INITIAL_Y = 10.0;
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 500;
@@ -149,12 +149,12 @@ void Rocket::landingAlgorithm( int landingFieldSize, int landingFieldPosition, f
 		// X-borgers:
 		if (windowWidth - x < x && 2 * gravity * (windowWidth - x) < 3 * vX * vX + 4 && vX > -2) 
 		{
-			cout << "\n (Stop becuse of left border) \n";
+			cout << " (Stop becuse of left border) ";
 			setSidePower(-gravity);
 		}
 		if (windowWidth - x > x && 2 * gravity * (x) < 3 * vX * vX + 4 && vX < 2) 
 		{
-			cout << "\n (Stop because of right border) \n";
+			cout << " (Stop because of right border) ";
 			setSidePower(gravity);
 		}
 		
