@@ -3,10 +3,13 @@ using namespace std;
 
 
 //Changable parameters:
-const int LANDING_FIELD_LENGHT = 50;
+const float FUEL = 100.0;
 const float CRUSH_SPEED = 5.0;
+const float ROCKET_INITIAL_X = 0.0;
+const float ROCKET_INITIAL_Y = 0.0;
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 500;
+const int LANDING_FIELD_LENGHT = 100;
 const float GRAVITY_ACCELERATION = 0.091;
 const float AIR_RESISTANCE = 0.02;
 
@@ -20,7 +23,7 @@ private:
 
 public:
 
-	Rocket(float x_ = 0, float y_ = 0, float fuel_ = 70) :
+	Rocket(float x_ = ROCKET_INITIAL_X, float y_ = ROCKET_INITIAL_Y, float fuel_ = FUEL) :
 		x(x_), y(y_), fuel(fuel_),
 		velocityX(0), velocityY(0),
 		sidePower(0), centralPower(0) {}
@@ -109,34 +112,40 @@ void Rocket::landingAlgorithm( int landingFieldSize, int landingFieldPosition, f
 
 	float x = getX(), y = getY(), vX = getVelocityX(), vY = getVelocityY();
 
-	cout << "_________________________________\n\n Approximate Time: " 
-		<< (-1 * vY + sqrt(vY * vY + 2 * gravity * (windowHeight - y))) 
-		<< "; vY: " << vY << "\n_________________________________\n\n";
+	cout << "_________________________________\n\n Approximate Time Landing: " 
+		<< (-1 * vY + sqrt(vY * vY + 2 * gravity * (windowHeight - y))) - 1.5
+		<< /*"; vY: " << vY <<*/ "\n_________________________________\n\n";
+	if (getFuel() > 0)
+	{
+		if (2 * gravity * (windowHeight - y) < 3 * vY * vY + 4 && vY > -2
+			/*&& !(x > landingFieldPosition && x < landingFieldPosition + landingFieldSize)*/) {
+			setCentralPower(-2 * gravity);
+		}
 
-	if (2 * gravity * (windowHeight - y) < 3 * vY * vY + 4 && vY > -2
-		/*&& !(x > landingFieldPosition && x < landingFieldPosition + landingFieldSize)*/) {
-		setCentralPower(-2 * gravity);
-	}
+		if (x < landingFieldPosition && vX * vX + vY * vY < CRUSH_SPEED * CRUSH_SPEED) {
+			setSidePower(gravity);
+		}
+		else if ((x > landingFieldPosition + landingFieldSize) && (vX * vX + vY * vY < CRUSH_SPEED * CRUSH_SPEED)) {
+			setSidePower(-gravity);
+		} // RIGHT side:
+		if (windowWidth - x < x && 2 * gravity * (windowWidth - x) < 3 * vX * vX + 4 && vX > -2) {
+			setSidePower(-gravity);
+		} // LEFT side:
+		if (windowWidth - x > x && 2 * gravity * (x) < 3 * vX * vX + 4 && vX < 2) {
+			setSidePower(gravity);
+		}
+		/*if (x < landingFieldPosition) {
+			setSidePower(gravity);
+		}
+		if (x > landingFieldPosition + landingFieldSize) {
+			setSidePower(-gravity);
+		}
+		if (x > landingFieldPosition && x < landingFieldPosition + landingFieldSize) {
 
-	if ( (x < landingFieldPosition) && (vX * vX + vY * vY < CRUSH_SPEED*CRUSH_SPEED) ) {
-		setSidePower(gravity);
+		}*/
+	} 
+	else
+	{
+		cout << "\n OUT OF FUEL! ";
 	}
-	else if ( (x > landingFieldPosition + landingFieldSize) && (vX * vX + vY * vY < CRUSH_SPEED*CRUSH_SPEED) ) {
-		setSidePower(-gravity);
-	} // RIGHT side:
-	if ( (windowWidth - x) < (x && 2 * gravity * (windowWidth - x) < 3 * vX * vX + 4 && vX > -2) ) {
-		setSidePower(-2 * gravity);
-	} // LEFT side:
-	if ( (windowWidth - x > x) && (2 * gravity * (x) < 3 * vX * vX + 4 && vX < 2) ) {
-		setSidePower(2 * gravity);
-	}
-	/*if (x < landingFieldPosition) {
-		setSidePower(gravity);
-	}
-	if (x > landingFieldPosition + landingFieldSize) {
-		setSidePower(-gravity);
-	}
-	if (x > landingFieldPosition && x < landingFieldPosition + landingFieldSize) {
-
-	}*/
 }

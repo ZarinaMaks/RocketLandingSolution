@@ -1,11 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "RocketLandingSolution.h"
-#include <iostream>
 #include <cstdlib>
 #include <string>
 #include <ctime>
 #include <random>
-using namespace std;
+
 using namespace sf;
 
 int main()
@@ -37,7 +36,7 @@ int main()
 	ground.setOutlineThickness(1.f);
 	ground.setOutlineColor(Color::Black);
 	ground.setFillColor(Color::White);
-	ground.setPosition(0, WINDOW_HEIGHT - 19);
+	ground.setPosition(0, WINDOW_HEIGHT - 10);
 
 	RectangleShape landingField(Vector2f(LANDING_FIELD_LENGHT, 19.f));
 	landingField.setFillColor(Color(250, 250, 250));
@@ -68,6 +67,11 @@ int main()
 	// Declaration of paramaters for Explosion animation: 
 	int i = 0;
 	int j = 0;
+
+	Texture FlameTexture;
+	FlameTexture.loadFromFile("C:\\Users\\zarmm\\source\\repos\\RocketLanding\\images\\Flame.png");
+	FlameTexture.setSmooth(true);
+	Sprite FlameSprite(FlameTexture);
 
 	// Main Application Cycle:
 	while (window.isOpen())
@@ -114,11 +118,24 @@ int main()
 			{
 				window.clear(Color::White);
 				if (rocket.getSidePower() > 0)
+				{
 					rocket.setFuel(rocket.getFuel() - rocket.getSidePower());
+					FlameSprite.setPosition(rocket.getX() - 20, rocket.getY());
+					window.draw(FlameSprite);
+
+				}
 				else if (rocket.getSidePower() < 0)
+				{
 					rocket.setFuel(rocket.getFuel() + rocket.getSidePower());
+					FlameSprite.setPosition(rocket.getX() - 20, rocket.getY());
+					window.draw(FlameSprite);
+				}
 				if (rocket.getCentralPower() < 0)
+				{
 					rocket.setFuel(rocket.getFuel() + rocket.getCentralPower());
+					FlameSprite.setPosition(rocket.getX() - 20, rocket.getY());
+					window.draw(FlameSprite);
+				}
 				rocket.setCentralPower(0);
 				rocket.setSidePower(0);
 
@@ -129,11 +146,6 @@ int main()
 					if (event.type == Event::Closed)
 						window.close();
 
-					Texture FlameTexture;
-					FlameTexture.loadFromFile("C:\\Users\\zarmm\\source\\repos\\RocketLanding\\images\\Flame.png");
-					FlameTexture.setSmooth(true);
-					Sprite FlameSprite(FlameTexture);
-
 					if (event.type == Event::KeyPressed)
 					{
 						if (event.key.code == Keyboard::A)
@@ -141,7 +153,7 @@ int main()
 							{
 								rocket.setSidePower(-2 * GRAVITY_ACCELERATION);
 
-								FlameSprite.setPosition(rocket.getX() - 40, rocket.getY());
+								FlameSprite.setPosition(rocket.getX() - 55, rocket.getY());
 								window.draw(FlameSprite);
 							}
 						if (event.key.code == Keyboard::D)
@@ -149,7 +161,7 @@ int main()
 							{
 								rocket.setSidePower(2 * GRAVITY_ACCELERATION);
 
-								FlameSprite.setPosition(rocket.getX() - 40, rocket.getY());
+								FlameSprite.setPosition(rocket.getX() - 55, rocket.getY());
 								window.draw(FlameSprite);
 							}
 						if (event.key.code == Keyboard::W)
@@ -157,7 +169,7 @@ int main()
 							{
 								rocket.setCentralPower(-2 * GRAVITY_ACCELERATION);
 
-								FlameSprite.setPosition(rocket.getX() - 40, rocket.getY());
+								FlameSprite.setPosition(rocket.getX() - 55, rocket.getY());
 								window.draw(FlameSprite);
 							}
 						if (event.key.code == Keyboard::S)
@@ -171,14 +183,14 @@ int main()
 				window.draw(ground);
 				window.draw(landingField);
 
-				RocketSprite.setPosition(rocket.getX() - 15, rocket.getY() - 70);
+				RocketSprite.setPosition(rocket.getX() - 13.5, rocket.getY() - 70);
 				window.draw(RocketSprite);
 
 				rocketHIT.setPosition(rocket.getX(), rocket.getY());
-				window.draw(rocketHIT);
+				//window.draw(rocketHIT);
 			}
 
-			cout << "\n ROCKET LANDING GAME " << "\n Play with WASD buttons! \n";
+			cout << "\n ROCKET LANDING GAME " << "\n You may use WASD buttons! \n";
 
 			if (rocket.getFuel() >= 0)
 			{
