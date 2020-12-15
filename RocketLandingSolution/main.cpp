@@ -4,28 +4,24 @@
 #include <cstdlib>
 #include <string>
 #include <ctime>
+#include <random>
 using namespace std;
 using namespace sf;
-
-const int LANDING_FIELD_LENGHT = 50;
-const float CRUSH_SPEED = 5.0;
-const int WINDOW_WIDTH = 1000;
-const int WINDOW_HEIGHT = 500;
-const float GRAVITY_ACCELERATION = 0.091;
-const float AIR_RESISTANCE = 0.02;
-
 
 int main()
 {
 	//------- App's Window -------//
 	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "RocketLanding");
+	random_device rd;
+	mt19937 mersenne(rd());
+	int landingFieldPosition = mersenne() % (WINDOW_WIDTH - LANDING_FIELD_LENGHT);
 
 	// Setting parameters of a Rocket and a Landing Fiend:
 	Rocket rocket(WINDOW_WIDTH / 2 - 10, 10);
 
 	// Timer: 
 	srand(static_cast<unsigned>(time(0)));
-	int landingFieldPosition = rand() % (WINDOW_WIDTH - LANDING_FIELD_LENGHT);
+
 
 	// Game State:
 	enum GAME
@@ -48,6 +44,10 @@ int main()
 	landingField.setOutlineThickness(1.f);
 	landingField.setOutlineColor(Color::Black);
 	landingField.setPosition(landingFieldPosition, WINDOW_HEIGHT - 30);
+
+	RectangleShape rocketHIT(Vector2f(5, 5));
+	rocketHIT.setFillColor(Color(100, 100, 100));
+
 
 	// Drawing a Rocket and an Explosion:
 	Texture RocketTexture;
@@ -90,9 +90,11 @@ int main()
 				|| rocket.getX() > WINDOW_WIDTH
 				|| rocket.getY() < 0
 				|| rocket.getY() > WINDOW_HEIGHT - 20
-				|| (rocket.getX() >= landingFieldPosition && rocket.getX() <= LANDING_FIELD_LENGHT + 100
-					&& rocket.getY() > 460
-					&& (rocket.getVelocityX() * rocket.getVelocityX() + rocket.getVelocityY() * rocket.getVelocityY() > 25)))
+				|| (rocket.getX() >= landingFieldPosition 
+					&& rocket.getX() <= landingFieldPosition + LANDING_FIELD_LENGHT
+					&& rocket.getY() > (WINDOW_HEIGHT - 45)
+					&& (rocket.getVelocityX() * rocket.getVelocityX() 
+						+ rocket.getVelocityY() * rocket.getVelocityY() > 25)))
 			{
 				game = LOSE;
 				tLose = clock();
@@ -101,8 +103,9 @@ int main()
 			// Setting parameters for Win:
 			else if (rocket.getX() >= landingFieldPosition
 				&& rocket.getX() <= landingFieldPosition + LANDING_FIELD_LENGHT
-				&& rocket.getY() > 460
-				&& (rocket.getVelocityX() * rocket.getVelocityX() + rocket.getVelocityY() * rocket.getVelocityY() <= 25))
+				&& rocket.getY() > (WINDOW_HEIGHT - 45)
+				&& (rocket.getVelocityX() * rocket.getVelocityX() 
+					+ rocket.getVelocityY() * rocket.getVelocityY() <= 25))
 			{
 				game = WIN;
 				continue;
@@ -168,8 +171,11 @@ int main()
 				window.draw(ground);
 				window.draw(landingField);
 
-				RocketSprite.setPosition(rocket.getX() - 35, rocket.getY() - 70);
+				RocketSprite.setPosition(rocket.getX() - 15, rocket.getY() - 70);
 				window.draw(RocketSprite);
+
+				rocketHIT.setPosition(rocket.getX(), rocket.getY());
+				window.draw(rocketHIT);
 			}
 
 			cout << "\n ROCKET LANDING GAME " << "\n Play with WASD buttons! \n";
@@ -203,7 +209,9 @@ int main()
 			window.draw(ground);
 			window.draw(landingField);
 
-			RocketSprite.setPosition(rocket.getX() - 35, rocket.getY() - 70);
+			
+
+			RocketSprite.setPosition(rocket.getX() - 16, rocket.getY() - 70);
 			window.draw(RocketSprite);
 
 			Texture WinTexture;

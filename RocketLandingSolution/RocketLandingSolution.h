@@ -1,5 +1,15 @@
 #include <iostream>
 using namespace std;
+
+
+//Changable parameters:
+const int LANDING_FIELD_LENGHT = 50;
+const float CRUSH_SPEED = 5.0;
+const int WINDOW_WIDTH = 1000;
+const int WINDOW_HEIGHT = 500;
+const float GRAVITY_ACCELERATION = 0.091;
+const float AIR_RESISTANCE = 0.02;
+
 struct Rocket
 {
 private:
@@ -99,22 +109,25 @@ void Rocket::landingAlgorithm( int landingFieldSize, int landingFieldPosition, f
 
 	float x = getX(), y = getY(), vX = getVelocityX(), vY = getVelocityY();
 
-	cout << "_________________________________\n\n Approximate Time: " << (-1 * vY + sqrt(vY * vY + 2 * gravity * (windowHeight - y))) << "; vY: " << vY << "\n_________________________________\n\n";
+	cout << "_________________________________\n\n Approximate Time: " 
+		<< (-1 * vY + sqrt(vY * vY + 2 * gravity * (windowHeight - y))) 
+		<< "; vY: " << vY << "\n_________________________________\n\n";
 
-	if (2 * gravity * (windowHeight - y) < 3 * vY * vY + 4 && vY > -2/*&& !(x > landingFieldPosition && x < landingFieldPosition + landingFieldSize)*/) {
+	if (2 * gravity * (windowHeight - y) < 3 * vY * vY + 4 && vY > -2
+		/*&& !(x > landingFieldPosition && x < landingFieldPosition + landingFieldSize)*/) {
 		setCentralPower(-2 * gravity);
 	}
 
-	if (x < landingFieldPosition && vX * vX + vY * vY < 25) {
+	if ( (x < landingFieldPosition) && (vX * vX + vY * vY < CRUSH_SPEED*CRUSH_SPEED) ) {
 		setSidePower(gravity);
 	}
-	else if (x > landingFieldPosition + landingFieldSize && vX * vX + vY * vY < 25) {
+	else if ( (x > landingFieldPosition + landingFieldSize) && (vX * vX + vY * vY < CRUSH_SPEED*CRUSH_SPEED) ) {
 		setSidePower(-gravity);
-	}
-	if (windowWidth - x < x && 2 * gravity * (windowWidth - x) < 3 * vX * vX + 4 && vX > -2) { // RIGHT
+	} // RIGHT side:
+	if ( (windowWidth - x) < (x && 2 * gravity * (windowWidth - x) < 3 * vX * vX + 4 && vX > -2) ) {
 		setSidePower(-2 * gravity);
-	}
-	if (windowWidth - x > x && 2 * gravity * (x) < 3 * vX * vX + 4 && vX < 2) {				// LEFT
+	} // LEFT side:
+	if ( (windowWidth - x > x) && (2 * gravity * (x) < 3 * vX * vX + 4 && vX < 2) ) {
 		setSidePower(2 * gravity);
 	}
 	/*if (x < landingFieldPosition) {
