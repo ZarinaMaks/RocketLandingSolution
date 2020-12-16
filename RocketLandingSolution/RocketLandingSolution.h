@@ -4,13 +4,13 @@ using namespace std;
 //Changable parameters:
 const float FUEL = 50.0;
 const float CRUSH_SPEED = 5.0;
-const float ROCKET_INITIAL_X = 500.0;
-const float ROCKET_INITIAL_Y = 0.0;
+const float ROCKET_INITIAL_X = 200.0;
+const float ROCKET_INITIAL_Y = 200.0;
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 500;
 const int LANDING_FIELD_LENGHT = 50;
 const float GRAVITY_ACCELERATION = 0.091;
-const float AIR_RESISTANCE = 0.02;
+const float AIR_RESISTANCE = -0.02;
 
 struct Rocket
 {
@@ -181,8 +181,7 @@ void Rocket::landingAlgorithm( int landingFieldSize, int landingFieldPosition, f
 
 	cout << "\n Height: " << h << "\n Distance to Board in present way: " << rToBoard
 		<< "\n S to LF: " << sLF << "\n Time of Fall: " << tOfFallWithoutP
-		<< "\n Time to Board in present direction with P: " << tToBroadWithoutP
-		<< "; without P: " << tOfFallWithP << "\n Time of Stop: "
+		<< "\n Time to Board in present direction with P: " << tToBroadWithoutP << "; without P: " << tOfFallWithP << "\n Time of Stop: "
 		<< "\n Central Power: " << getCentralPower() << "\n Speed: " << speed << endl << endl;
 
 		// ---------- ALGORITHM 2 WE KNOW: H = Vt + (gt^2)/2, THEN 2V^3 > 2gH ---------- //
