@@ -29,6 +29,22 @@ int main()
 	};
 	GAME game = ON;
 
+
+	// Drawing Lines:
+	RectangleShape h(sf::Vector2f(WINDOW_HEIGHT - rocket.getY() - 30, 5));
+	h.setFillColor(Color(255, 0, 0));
+	h.rotate(90);
+
+	RectangleShape rR(sf::Vector2f(WINDOW_WIDTH - rocket.getX() - 10, 5));
+	rR.setFillColor(Color(255, 0, 0));
+
+	RectangleShape rL(sf::Vector2f(-rocket.getX() + 10, 5));
+	rL.setFillColor(Color(255, 0, 0));
+
+	RectangleShape sLF(sf::Vector2f(rocket.getX() > landingFieldPosition ? rocket.getX() - landingFieldPosition - LANDING_FIELD_LENGHT : landingFieldPosition - rocket.getX(), 5));
+	sLF.setFillColor(Color(0, 255, 0));
+
+
 	// Drawing a Ground and a Landing Field:
 	RectangleShape ground(Vector2f(WINDOW_WIDTH, 19.f));
 	ground.setOutlineThickness(1.f);
@@ -177,6 +193,23 @@ int main()
 						}
 					}
 				}
+
+				// Drawing:
+				h.setPosition(rocket.getX(), rocket.getY());
+				h.setSize(sf::Vector2f(WINDOW_HEIGHT - rocket.getY() - 30, 5));
+				window.draw(h);
+
+				rR.setPosition(rocket.getX(), rocket.getY());
+				rR.setSize(sf::Vector2f(WINDOW_WIDTH - rocket.getX() - 10, 5));
+				window.draw(rR);
+
+				rL.setPosition(rocket.getX(), rocket.getY());
+				rL.setSize(sf::Vector2f(-rocket.getX() + 10, 5));
+				window.draw(rL);
+
+				sLF.setPosition(rocket.getX(), rocket.getY());
+				sLF.setSize(sf::Vector2f(rocket.getX() > landingFieldPosition ? -(rocket.getX() - landingFieldPosition - LANDING_FIELD_LENGHT) : landingFieldPosition - rocket.getX(), 5));
+				window.draw(sLF);
 
 				window.draw(ground);
 				window.draw(landingField);
